@@ -1,0 +1,24 @@
+@startuml
+title Warm House Container Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "User", "A user of Warm House system")
+Person(admin, "Administrator", "An administrator who connects sensors to the system")
+
+System(WarmHouseSystem, "Warm House System", "System managing sensors and provides tempertature info to users")
+
+Container_Boundary(WarmHouseSystem, "Warm House System") {
+  Container(WebApp, "Web Application", "Go, C#, Python", "Handles user interactions")
+  Container(SensorsService, "Sensors Service", "C#", "Handles sensors")
+  ContainerDb(Database, "Database", "PostgreSQL", "Stores user data and sensors' states")
+}
+
+Rel(user, WebApp, "Uses the system")
+Rel(admin, WebApp,"Manages the system")
+Rel(WebApp,Database,"Reads/Writes user data")
+Rel(SensorsService,Database,"Writes sensors' data")
+Rel(WebApp,SensorsService,"Fetches sensors' data")
+@enduml

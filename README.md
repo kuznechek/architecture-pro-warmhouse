@@ -46,7 +46,7 @@
 
 ### 5. Визуализация контекста системы — диаграмма С4
 
-![Warm House Context Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/context.png)
+![Warm House Context Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/context/context.png)
 
 # Задание 2. Проектирование микросервисной архитектуры
 
@@ -54,11 +54,11 @@
 
 **Диаграмма контейнеров (Containers)**
 
-Добавьте диаграмму.
+![Warm House Container Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/container/container.png)
 
 **Диаграмма компонентов (Components)**
 
-Добавьте диаграмму для каждого из выделенных микросервисов.
+![Warm House Web Application Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/component/component.png)
 
 **Диаграмма кода (Code)**
 
