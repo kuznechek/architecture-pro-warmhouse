@@ -5,6 +5,7 @@
 **Управление отоплением:**
 
 - Пользователи могут удалённо включать/выключать отопление в своих домах.
+- Система поддерживает добавление/удаление/обновление данных о датчиках температуры
 
 **Мониторинг температуры:**
 
@@ -22,8 +23,9 @@
 
 ### 3. Определение доменов и границы контекстов
 
-- Домен: управление Устройствами
-Контекст работы с устройствами:
+**Домен:** управление датчиками
+
+**Контекст работы с устройствами:**
 1. сущности: датчик температуры
 2. объекты-значения: значение температуры
 3. агрегаты: список датчиков
@@ -50,29 +52,31 @@
 
 # Задание 2. Проектирование микросервисной архитектуры
 
-В этом задании вам нужно предоставить только диаграммы в модели C4. Мы не просим вас отдельно описывать получившиеся микросервисы и то, как вы определили взаимодействия между компонентами To-Be системы. Если вы правильно подготовите диаграммы C4, они и так это покажут.
-
 **Диаграмма контейнеров (Containers)**
 
-![Warm House Container Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/container/container.png)
+![Warm House System Container Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/containers/containers.png)
 
 **Диаграмма компонентов (Components)**
 
-![Warm House Web Application Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/component/component.png)
+![Auth/Registration Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_AuthReg.png)
+
+![Device Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_Device.png)
 
 **Диаграмма кода (Code)**
 
-Добавьте одну диаграмму или несколько.
+![Device Code Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_Device.png)
 
 # Задание 3. Разработка ER-диаграммы
 
-Добавьте сюда ER-диаграмму. Она должна отражать ключевые сущности системы, их атрибуты и тип связей между ними.
+![ER Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/er/er.png)
 
 # Задание 4. Создание и документирование API
 
 ### 1. Тип API
 
-Укажите, какой тип API вы будете использовать для взаимодействия микросервисов. Объясните своё решение.
+- В данном случае взаимодействие между фронтеном и бекендом будет реализовано через REST API, так как у приложения простые коммуникационные потребности.
+
+- В то же время микросервисы между собой будут взаимодействовать через паттерн Pub/Sub, так как микросервисы слабосвязны, им не нужны прямые зависимости. Использование шины событий эффективно для обновлений в реальном времени и асинхронных коммуникаций, что также отвечает требованиям задачи.
 
 ### 2. Документация API
 

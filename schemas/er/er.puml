@@ -1,0 +1,30 @@
+@startuml
+
+entity User {
+    id : int
+    login : string
+    name : string
+    email : string
+    password : string
+    isAdmin : bool
+
+    void Register()
+    void Login()
+}
+
+entity Device {
+    id : int
+    user_id : int
+    name : string
+    isEnable : bool
+    value : string
+    version : string
+    lastUpdate : string
+    void New()
+    void Delete()
+    void Update()
+}
+
+User ||--o{ Device
+
+@enduml
