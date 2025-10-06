@@ -54,7 +54,7 @@ func main() {
 
 	log.Println("Visit http://localhost:8081/health to see if it works.")
 	log.Println("Visit http://localhost:8081/temperature?location=Kitchen to get temperature from the kitchen.")
-	log.Println("Visit http://localhost:8081/temperature?sensorId=2 to sget temperature on the sensor 2.")
+	log.Println("Visit http://localhost:8081/temperature?sensorId=2 to get temperature on the sensor 2.")
 
 	// Start the server in a goroutine
 	router.Run(PORT)

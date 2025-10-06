@@ -50,25 +50,41 @@
 
 ![Warm House Context Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/context/context.png)
 
+[Warm House Context Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/context/context.puml)
+
 # Задание 2. Проектирование микросервисной архитектуры
 
 **Диаграмма контейнеров (Containers)**
 
 ![Warm House System Container Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/containers/containers.png)
 
+[Warm House System Container Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/containers/containers.puml)
+
 **Диаграмма компонентов (Components)**
 
 ![Auth/Registration Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_AuthReg.png)
 
+[Auth/Registration Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_AuthReg.puml)
+
 ![Device Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_Device.png)
+
+[Device Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_Device.puml)
 
 **Диаграмма кода (Code)**
 
-![Device Code Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_Device.png)
+![Device Control Code Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/code/device_control_component.png)
+
+[Device Control Code Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/code/device_control_component.puml)
+
+![Sensors Telemetry Code Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/code/sensors-telemetry-component.png)
+
+[Sensors Telemetry Code Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/code/sensors-telemetry-component.puml)
 
 # Задание 3. Разработка ER-диаграммы
 
 ![ER Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/er/er.png)
+
+[ER Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/er/er.puml)
 
 # Задание 4. Создание и документирование API
 
@@ -76,45 +92,29 @@
 
 - В данном случае взаимодействие между фронтеном и бекендом будет реализовано через REST API, так как у приложения простые коммуникационные потребности.
 
-- В то же время микросервисы между собой будут взаимодействовать через паттерн Pub/Sub, так как микросервисы слабосвязны, им не нужны прямые зависимости. Использование шины событий эффективно для обновлений в реальном времени и асинхронных коммуникаций, что также отвечает требованиям задачи.
-
 ### 2. Документация API
 
-Здесь приложите ссылки на документацию API для микросервисов, которые вы спроектировали в первой части проектной работы. Для документирования используйте Swagger/OpenAPI или AsyncAPI.
+[Device Control swagger.json](https://github.com/kuznechek/architecture-pro-warmhouse/tree/warmhouse/apps/microservice-architecture/device-control-service/swagger.json)
+
+[Telemetry swagger.json](https://github.com/kuznechek/architecture-pro-warmhouse/tree/warmhouse/apps/microservice-architecture/sensors-telemetry-service/swagger.json)
 
 # Задание 5. Работа с docker и docker-compose
-
-Перейдите в apps.
-
-Там находится приложение-монолит для работы с датчиками температуры. В README.md описано как запустить решение.
-
-Вам нужно:
-
-1) сделать простое приложение temperature-api на любом удобном для вас языке программирования, которое при запросе /temperature?location= будет отдавать рандомное значение температуры.
-
-Locations - название комнаты, sensorId - идентификатор названия комнаты
-
-2) Приложение следует упаковать в Docker и добавить в docker-compose. Порт по умолчанию должен быть 8081
-
-3) Кроме того для smart_home приложения требуется база данных - добавьте в docker-compose файл настройки для запуска postgres с указанием скрипта инициализации ./smart_home/init.sql
-
-Для проверки можно использовать Postman коллекцию smarthome-api.postman_collection.json и вызвать:
 
 - Create Sensor
 - Get All Sensors
 
-Должно при каждом вызове отображаться разное значение температуры
-
-Ревьюер будет проверять точно так же.
-
+При каждом вызове отображается разное значение температуры.
 
 # **Задание 6. Разработка MVP**
 
 Необходимо создать новые микросервисы и обеспечить их интеграции с существующим монолитом для плавного перехода к микросервисной архитектуре. 
 
-### **Что нужно сделать**
+В рамках задания были созданы два микросервиса - для управления устройствами (**device-control-service**, Python) и для отслеживания приходящих запросов с устройств, оповещающих об изменении состояния устройства (**sensors-telemetry-service**, Go). Сервисы работают параллельно и не зависят друг от друга.
 
-1. Создайте новые микросервисы для управления телеметрией и устройствами (с простейшей логикой), которые будут интегрированы с существующим монолитным приложением. Каждый микросервис на своем ООП языке.
-2. Обеспечьте взаимодействие между микросервисами и монолитом (при желании с помощью брокера сообщений), чтобы постепенно перенести функциональность из монолита в микросервисы. 
+Для тестирования их работы можно воспользоваться Postman коллекциями:
 
-В результате у вас должны быть созданы Dockerfiles и docker-compose для запуска микросервисов. 
+[DeviceControl.postman_collection.json](https://github.com/kuznechek/architecture-pro-warmhouse/tree/warmhouse/apps/microservice-architecture/postman-collections/DeviceControl.postman_collection.json)
+
+[Telemetry.postman_collection.json](https://github.com/kuznechek/architecture-pro-warmhouse/tree/warmhouse/apps/microservice-architecture/postman-collections/Telemetry.postman_collection.json)
+
+Каждый сервис может быть масштабирован и доработан до более приближённой модели к реальным условиям (например, в данной версии нет эмуляторов устройств, и данные существуют только в формате таблицы в базе данных).

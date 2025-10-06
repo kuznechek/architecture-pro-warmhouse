@@ -12,7 +12,6 @@ engine = create_engine(database_url)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-
 def get_session():
     with Session(engine) as session:
         yield session
@@ -25,8 +24,7 @@ async def index():
     return {"device control status": "ok"}
 
 @app.post("/api/device-control-service/sensors/")
-def create_sensor(sensor: Sensor) -> Sensor:
-    session = SessionLocal()
+def create_sensor(session: SessionDep, sensor: Sensor) -> Sensor:
     session.add(sensor)
     session.commit()
     session.refresh(sensor)

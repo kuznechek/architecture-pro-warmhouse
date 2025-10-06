@@ -6,19 +6,19 @@ top to bottom direction
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
 
 Container_Boundary(WarmHouseSystem, "Warm House System") {
-  Container_Ext(apiGateway, "ExternalAPI Gateway", "Api")
-  Container(DeviceService, "Device Service", "Handles devices")
+  Container(web, "Web App", "web", "Handles user interactions")
+  Container(DeviceControlService, "Device Control Service", "Handles devices")
   ContainerDb_Ext(Database, "Database", "PostgreSQL", "Stores data")
-  Container_Ext(SensorsService, "Sensors Service", "Manages sensors work")
 }
+Container_Ext(Device, "Device", "Physical device")
 
-Container(DeviceService, "Device Service", "Handles authentication and authorization") {
-  Component(DeviceControlComponent, "DeviceControlComponent", "Handles authentication and authorization")
+Container(DeviceControlService, "Device Control Service", "Handles authentication and authorization") {
+  Component(DeviceControlComponent, "Device Control Component", "Handles authentication and authorization")
   Component(RepositoryLayer, "Repository Layer", "Handles authentication and authorization")
 }
 
-Rel(apiGateway,DeviceControlComponent,"Rest api")
+Rel(web,DeviceControlComponent,"Rest API")
 Rel(DeviceControlComponent,RepositoryLayer,"Fetches device data")
-Rel(DeviceControlComponent,SensorsService,"Manages devices")
+Rel(DeviceControlComponent,Device,"Manages devices")
 Rel(RepositoryLayer,Database,"Reads/Writes data")
 @enduml

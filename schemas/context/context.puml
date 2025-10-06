@@ -10,12 +10,12 @@ Person(user, "User", "A user of Warm House system")
 Person(admin, "Administrator", "An administrator who connects sensors to the system")
 
 System(WarmHouseSystem, "Warm House System", "System managing sensors and provides tempertature info to users")
-System_Ext(sensors, "Sensors", "Sensors in users' houses")
+Container_Ext(Device, "Device", "Physical device")
   
 Rel(user, WarmHouseSystem, "Regulates the temperature")
 Rel(user, WarmHouseSystem, "Requests temperature data")
 Rel(admin, WarmHouseSystem,"Reigisters the sensors in the system")
-Rel(admin, sensors,"Installs the sensors in the user's house")
-Rel(WarmHouseSystem, sensors,"Access to sensor data")
+Rel(admin, Device,"Manually installs the sensors in the user's house")
+Rel(WarmHouseSystem, Device,"Access to physical devices")
 
 @enduml

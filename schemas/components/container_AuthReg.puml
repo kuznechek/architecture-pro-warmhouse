@@ -6,7 +6,7 @@ top to bottom direction
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
 
 Container_Boundary(WarmHouseSystem, "Warm House System") {
-  Container_Ext(apiGateway, "ExternalAPI Gateway", "Api")
+  Container(web, "Web App", "web", "Handles user interactions")
   Container(AuthRegService, "Auth/Registration Service", "Handles authentication and authorization")
   ContainerDb_Ext(Database, "Database", "PostgreSQL", "Stores data")
 }
@@ -18,8 +18,8 @@ Container(AuthRegService, "Auth/Registration Service", "Handles authentication a
   Component(RepositoryLayer, "Repository Layer", "Handles authentication and authorization")
 }
 
-Rel(apiGateway,AuthComponent,"Rest api")
-Rel(apiGateway,RegComponent,"Rest api")
+Rel(web,AuthComponent,"Rest api")
+Rel(web,RegComponent,"Rest api")
 Rel(AuthComponent,RepositoryLayer,"Fetches user data")
 Rel(RegComponent,RepositoryLayer,"Fetches  user data")
 Rel(RepositoryLayer,Database,"Reads/Writes data")
