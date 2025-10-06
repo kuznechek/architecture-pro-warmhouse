@@ -4,12 +4,17 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
 	"time"
 
 	"smarthome/models"
 
+	"database/sql"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 )
+
+var dataBase *sql.DB
 
 // DB represents the database connection
 type DB struct {
@@ -18,10 +23,20 @@ type DB struct {
 
 // New creates a new DB instance
 func New(connString string) (*DB, error) {
-	pool, err := pgxpool.New(context.Background(), connString)
+	//pool, err := pgxpool.Conn(context.Background())
+
+	poolConfig, err := pgxpool.ParseConfig(connString)
 	if err != nil {
-		return nil, fmt.Errorf("unable to connect to database: %w", err)
+		fmt.Fprintf(os.Stderr, "Create pool failed: %v\n", err)
+		os.Exit(1)
 	}
+
+	pool, err := pgxpool.NewWithConfig(context.Background(), poolConfig)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Connect to database failed: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Println("Connection OK!")
 
 	// Test the connection
 	if err := pool.Ping(context.Background()); err != nil {

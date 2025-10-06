@@ -14,7 +14,7 @@ const PORT = ":8081"
 
 func main() {
 
-	log.Println("Start temperature-api app . . .")
+	log.Println("Start temperature-api . . .")
 
 	// Initialize router
 	router := gin.Default()
