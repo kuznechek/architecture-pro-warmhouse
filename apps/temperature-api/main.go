@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -60,5 +59,4 @@ func main() {
 	router.Run(PORT)
 
 	log.Println("Server exited properly")
-	fmt.Scanln()
 }

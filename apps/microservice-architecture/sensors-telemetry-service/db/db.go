@@ -2,8 +2,7 @@ package db
 
 import (
 	"context"
-	"fmt"
-	"os"
+	"log"
 	"time"
 
 	"database/sql"
@@ -19,14 +18,13 @@ func New(connString string) {
 	var err error
 	db, err = sql.Open("postgres", connString)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Create pool failed: %v\n", err)
-		os.Exit(1)
+		log.Fatalf("Create pool failed: %v", err)
 	}
-	fmt.Println("Connection OK!")
+	log.Println("Connection OK!")
 
 	// Test the connection
 	if err := db.Ping(); err != nil {
-		fmt.Fprintf(os.Stderr, "unable to ping database: %w", err)
+		log.Fatalf("unable to ping database: %v", err)
 	}
 }
 
@@ -39,7 +37,8 @@ func GetSensors(ctx context.Context) ([]models.Sensor, error) {
 
 	rows, err := db.Query(query)
 	if err != nil {
-		return nil, fmt.Errorf("error querying sensors: %w", err)
+		log.Fatalln("error querying sensors: %w", err)
+		return nil, err
 	}
 	defer rows.Close()
 
@@ -58,13 +57,15 @@ func GetSensors(ctx context.Context) ([]models.Sensor, error) {
 			&s.CreatedAt,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("error scanning sensor row: %w", err)
+			log.Fatalln("error scanning sensor row: %w", err)
+			return nil, err
 		}
 		sensors = append(sensors, s)
 	}
 
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("error iterating sensor rows: %w", err)
+		log.Fatalln("error iterating sensor rows: ", err)
+		return nil, err
 	}
 
 	return sensors, nil
@@ -79,7 +80,8 @@ func UpdateSensorValue(ctx context.Context, id int, value float64, status string
 
 	rows, err := db.Query(query, value, status, time.Now(), id)
 	if err != nil {
-		return fmt.Errorf("error updating sensor value: %w", err)
+		log.Fatalln("error updating sensor value: %w", err)
+		return nil
 	}
 	defer rows.Close()
 

@@ -19,11 +19,11 @@ def get_session():
 SessionDep = Annotated[SessionLocal, Depends(get_session)]
 app = FastAPI()
 
-@app.get("/api/device-control-service/")
+@app.get("/api/v2/device")
 async def index():
     return {"device control status": "ok"}
 
-@app.post("/api/device-control-service/sensors/")
+@app.post("/api/v2/sensors/")
 def create_sensor(session: SessionDep, sensor: Sensor) -> Sensor:
     session.add(sensor)
     session.commit()
@@ -32,19 +32,19 @@ def create_sensor(session: SessionDep, sensor: Sensor) -> Sensor:
     print(f"Sensor was created: {sensor.name}")
     return  sensor
 
-@app.get("/api/device-control-service/sensors/")
+@app.get("/api/v2/sensors/")
 def get_sensors(session: SessionDep, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Sensor]:
     sensors = session.exec(select(Sensor).offset(offset).limit(limit)).all()
     return sensors
 
-@app.get("/api/device-control-service/sensors/{sensorId}")
+@app.get("/api/v2/sensors/{sensorId}")
 def read_sensor(sensorId: int, session: SessionDep):
     sensor = session.get(Sensor, sensorId)
     if not sensor:
         raise HTTPException(status_code=404, detail="Sensor not found")
     return sensor
 
-@app.delete("/api/device-control-service/sensors/{sensorId}")
+@app.delete("/api/v2/sensors/{sensorId}")
 def delete_sensor(sensorId: int, session: SessionDep):
     sensor = session.get(Sensor, sensorId)
     if not sensor:

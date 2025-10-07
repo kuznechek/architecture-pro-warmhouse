@@ -20,14 +20,14 @@
     }
   ],
   "paths": {
-    "/api/sensors-telemetry-service/health": {
+    "/api/v2/telemetry": {
       "get": {
         "summary": "Service Health Check",
         "description": "Returns the current status of the sensors telemetry service. This endpoint is used for health monitoring and service discovery.",
         "operationId": "health_check"
       }
     },
-    "/api/sensors-telemetry-service/sensors/{id}/value": {
+    "/api/v2/sensors/{id}/value": {
       "patch": {
         "summary": "Update Sensor Value",
         "description": "Update the current value and status of a specific sensor. This endpoint is typically used by telemetry systems to report real-time sensor readings.",

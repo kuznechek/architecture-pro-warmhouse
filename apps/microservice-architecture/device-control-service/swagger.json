@@ -20,7 +20,7 @@
     }
   ],
   "paths": {
-    "/api/device-control-service/": {
+    "/api/v2/device": {
       "get": {
         "summary": "Service Health Check",
         "description": "Returns the current status of the device control service. This endpoint is used for health monitoring and service discovery.",
@@ -28,7 +28,7 @@
         "tags": ["Health"]
       }
     },
-    "/api/device-control-service/sensors/": {
+    "/api/v2/sensors/": {
       "get": {
         "summary": "List Sensors",
         "description": "Retrieve a paginated list of all sensors in the system. Supports offset and limit parameters for pagination.",
@@ -42,7 +42,7 @@
         "tags": ["Sensors"]
       }
     },
-    "/api/device-control-service/sensors/{sensorId}": {
+    "/api/v2/sensors/{sensorId}": {
       "get": {
         "summary": "Get Sensor by ID",
         "description": "Retrieve a specific sensor by its unique identifier.",

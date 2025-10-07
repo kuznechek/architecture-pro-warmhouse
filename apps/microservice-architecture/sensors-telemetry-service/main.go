@@ -19,11 +19,11 @@ func main() {
 	router := gin.Default()
 
 	// API routes
-	router.GET("/api/sensors-telemetry-service/health", func(c *gin.Context) {
+	router.GET("/api/v2/telemetry", func(c *gin.Context) {
 		c.JSON(200, gin.H{"telemetry status": "ok"})
 	})
 
-	router.PATCH("api/sensors-telemetry-service/sensors/:id/value", handlers.UpdateSensorValue)
+	router.PATCH("api/v2/sensors/:id/value", handlers.UpdateSensorValue)
 
 	router.Run(PORT)
 
