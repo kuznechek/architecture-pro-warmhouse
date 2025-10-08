@@ -20,7 +20,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"name\": \"Living Room Temperature\",\n    \"type\": \"temperature\",\n    \"location\": \"Living Room\",\n    \"unit\": \"°C\"\n}"
 				},
-				"url": "http://localhost:8083/api/device-control-service/sensors/",
+				"url": "http://localhost:8083/api/v2/sensors/",
 				"description": "Create a new sensor"
 			},
 			"response": []
@@ -30,7 +30,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8083/api/device-control-service/sensors/",
+				"url": "http://localhost:8083/api/v2/sensors/",
 				"description": "Retrieve all sensors"
 			},
 			"response": []
@@ -40,7 +40,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8083/api/device-control-service/sensors/39",
+				"url": "http://localhost:8083/api/v2/sensors/5",
 				"description": "Retrieve a specific sensor by ID"
 			},
 			"response": []
@@ -50,7 +50,7 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:8083/api/device-control-service/sensors/6",
+				"url": "http://localhost:8083/api/v2/sensors/5",
 				"description": "Delete a sensor"
 			},
 			"response": []
@@ -60,7 +60,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8083/api/device-control-service/",
+				"url": "http://localhost:8083/api/v2/device",
 				"description": "Check if the API is running"
 			},
 			"response": []

@@ -11,7 +11,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8082/api/sensors-telemetry-service/health",
+				"url": "http://localhost:8082/api/v2/telemetry",
 				"description": "Check if the API is running"
 			},
 			"response": []
@@ -30,7 +30,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"value\": 22.5,\n    \"status\": \"active\"\n}"
 				},
-				"url": "http://localhost:8082/api/sensors-telemetry-service/sensors/1/value",
+				"url": "http://localhost:8082/api/v2/sensors/1/value",
 				"description": "Update a sensor's value and status"
 			},
 			"response": []
@@ -49,7 +49,7 @@
 					"mode": "raw",
 					"raw": "{\n    \"value\": 0.0,\n    \"status\": \"inactive\"\n}"
 				},
-				"url": "http://localhost:8082/api/sensors-telemetry-service/sensors/1/value",
+				"url": "http://localhost:8082/api/v2/sensors/1/value",
 				"description": "Update a sensor's value and status"
 			},
 			"response": []
