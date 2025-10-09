@@ -1,0 +1,30 @@
+@startuml
+title WarmHouse Sensors-Telemetry-Component Code Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+entity SensorsTelemetryModule {
+    void UpdateSensorValue()
+}
+
+class SensorHandler {
+    void UpdateSensorValue()
+}
+
+class SensorData {
+  +Int id
+  +Int user_id
+  +String name
+  +String value
+  +String type
+  +String status
+  +Date last_updated
+  +Date created_at
+}
+
+SensorsTelemetryModule "1" -- "0..*" SensorHandler : fetches data
+SensorHandler "1" -- "0..*" SensorData : includes
+
+@enduml

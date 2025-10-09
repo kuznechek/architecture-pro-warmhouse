@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "8d4d0084-05e4-46eb-b901-96f16406c8c9",
+		"name": "Telemetry API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14710506"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8082/api/v2/telemetry",
+				"description": "Check if the API is running"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Sensor Value",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"value\": 22.5,\n    \"status\": \"active\"\n}"
+				},
+				"url": "http://localhost:8082/api/v2/sensors/1/value",
+				"description": "Update a sensor's value and status"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Sensor Status",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"value\": 0.0,\n    \"status\": \"inactive\"\n}"
+				},
+				"url": "http://localhost:8082/api/v2/sensors/1/value",
+				"description": "Update a sensor's value and status"
+			},
+			"response": []
+		}
+	]
+}

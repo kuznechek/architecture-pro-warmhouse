@@ -1,0 +1,24 @@
+@startuml
+title Device Component Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary(WarmHouseSystem, "Warm House System") {
+  Container(web, "Web App", "web", "Handles user interactions")
+  Container(DeviceControlService, "Device Control Service", "Handles devices")
+  ContainerDb_Ext(Database, "Database", "PostgreSQL", "Stores data")
+}
+Container_Ext(Device, "Device", "Physical device")
+
+Container(DeviceControlService, "Device Control Service", "Handles authentication and authorization") {
+  Component(DeviceControlComponent, "Device Control Component", "Handles authentication and authorization")
+  Component(RepositoryLayer, "Repository Layer", "Handles authentication and authorization")
+}
+
+Rel(web,DeviceControlComponent,"Rest API")
+Rel(DeviceControlComponent,RepositoryLayer,"Fetches device data")
+Rel(DeviceControlComponent,Device,"Manages devices")
+Rel(RepositoryLayer,Database,"Reads/Writes data")
+@enduml

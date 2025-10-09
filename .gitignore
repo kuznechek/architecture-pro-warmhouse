@@ -1,1 +1,35 @@
 .DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# IDE/editor
+.idea/
+.vscode/
+*.code-workspace
+
+# Go build artifacts
+bin/
+build/
+coverage.out
+*.test
+*.out
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+go.work
+go.work.sum
+
+# Python virtualenvs (for docs tooling)
+.venv/
+venv/
+env/
+
+# Logs
+*.log
+
+# Misc
+*.pid

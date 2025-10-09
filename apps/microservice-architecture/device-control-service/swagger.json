@@ -1,0 +1,74 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Device Control Service API",
+    "description": "API for managing sensors in the Warm House System. This service provides endpoints for creating, reading, updating, and deleting sensors, along with health monitoring capabilities using FastAPI and SQLModel.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Warm House System",
+      "email": "support@warmhouse.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Local development server"
+    },
+    {
+      "url": "http://device-control-service:8000",
+      "description": "Docker container server"
+    }
+  ],
+  "paths": {
+    "/api/v2/device": {
+      "get": {
+        "summary": "Service Health Check",
+        "description": "Returns the current status of the device control service. This endpoint is used for health monitoring and service discovery.",
+        "operationId": "health_check",
+        "tags": ["Health"]
+      }
+    },
+    "/api/v2/sensors/": {
+      "get": {
+        "summary": "List Sensors",
+        "description": "Retrieve a paginated list of all sensors in the system. Supports offset and limit parameters for pagination.",
+        "operationId": "list_sensors",
+        "tags": ["Sensors"]
+      },
+      "post": {
+        "summary": "Create Sensor",
+        "description": "Create a new sensor in the system. The sensor will be initialized with default values for status, timestamps, and temperature reading from the external temperature service.",
+        "operationId": "create_sensor",
+        "tags": ["Sensors"]
+      }
+    },
+    "/api/v2/sensors/{sensorId}": {
+      "get": {
+        "summary": "Get Sensor by ID",
+        "description": "Retrieve a specific sensor by its unique identifier.",
+        "operationId": "get_sensor",
+        "tags": ["Sensors"]
+      },
+      "delete": {
+        "summary": "Delete Sensor",
+        "description": "Delete a sensor from the system permanently. This action cannot be undone.",
+        "operationId": "delete_sensor",
+        "tags": ["Sensors"]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Health",
+      "description": "Service health and monitoring endpoints"
+    },
+    {
+      "name": "Sensors",
+      "description": "Sensor management operations including CRUD operations"
+    }
+  ],
+  "externalDocs": {
+    "description": "Warm House System Documentation",
+    "url": "https://github.com/warmhouse/architecture-pro-warmhouse"
+  }
+}

@@ -1,154 +1,128 @@
-# Project_template
-
-Это шаблон для решения проектной работы. Структура этого файла повторяет структуру заданий. Заполняйте его по мере работы над решением.
-
 # Задание 1. Анализ и планирование
-
-<aside>
-
-Чтобы составить документ с описанием текущей архитектуры приложения, можно часть информации взять из описания компании и условия задания. Это нормально.
-
-</aside
 
 ### 1. Описание функциональности монолитного приложения
 
 **Управление отоплением:**
 
-- Пользователи могут…
-- Система поддерживает…
-- …
+- Пользователи могут удалённо включать/выключать отопление в своих домах.
+- Система поддерживает добавление/удаление/обновление данных о датчиках температуры
 
 **Мониторинг температуры:**
 
-- Пользователи могут…
-- Система поддерживает…
-- …
+- Пользователи могут просматривать текущую температуру в своих домах через веб-интерфейс.
+- Система получает данные о температуре с датчиков, установленных в домах.
 
 ### 2. Анализ архитектуры монолитного приложения
 
-Перечислите здесь основные особенности текущего приложения: какой язык программирования используется, какая база данных, как организовано взаимодействие между компонентами и так далее.
+- Язык программирования: Go
+- База данных: PostgreSQL
+- Архитектура: монолитная, все компоненты системы (обработка запросов, бизнес-логика, работа с данными) находятся в рамках одного приложения.
+- Взаимодействие: синхронное, запросы обрабатываются последовательно.
+- Масштабируемость: ограничена, так как монолит сложно масштабировать по частям.
+- Развертывание: требует остановки всего приложения.
 
 ### 3. Определение доменов и границы контекстов
 
-Опишите здесь домены, которые вы выделили.
+**Домен:** управление датчиками (включение, выключение, изменение локации)
+
+**Контекст работы с устройствами:**
+1. сущности: датчик температуры
+2. объекты-значения: управляющая команда
+3. агрегаты: список датчиков
+4. репозитории: репозиторий датчиков
+5. сервисы: сервис управления температурой (temperature_service.go)
+
+**Домен:** получение данных с датчиков
+
+**Контекст работы с устройствами:**
+1. сущности: датчик температуры (или другой датчик)
+2. объекты-значения: дто со значением датчика, статус датчика (активен, неактивен)
+3. агрегаты: список датчиков
+4. репозитории: репозиторий датчиков
+5. сервисы: сервис телеметрии
 
 ### **4. Проблемы монолитного решения**
+-Любые изменения в текущем ПО увеличивают риск возникновения ошибок, так как все компоненты программы сильно связаны друг с другом.
+**Как итог:** масштабирование и доработка повлекут непредвиденное ранее поведение программы, так что потребуется дополнительное тестирование
 
-- …
-- …
-- …
+- Текущий продукт невозможно протестировать по частям
+**Как итог:** введение каждой новой функции потребует нового тестирования всего цикла развёртывания
 
-Если вы считаете, что текущее решение не вызывает проблем, аргументируйте свою позицию.
+- Текущий продукт трудно масштабировать из-за сильной связности: для добавления нового функционала придётся переписывать имеющийся сервис или разделять его, кроме того основной цикл работы сервера также будет подвержен изменениям.
+**Как итог:** масштабирование повлечёт изменение во всех областях ПО
+
+- Неоптимизированная работа команды из-за всех вышеперечисленных факторов
+**Как итог:** увеличивается время на разработку и тестирование
 
 ### 5. Визуализация контекста системы — диаграмма С4
 
-Добавьте сюда диаграмму контекста в модели C4.
+![Warm House Context Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/context/context.png)
 
-Чтобы добавить ссылку в файл Readme.md, нужно использовать синтаксис Markdown. Это делают так:
-
-```markdown
-[Текст ссылки](URL)
-```
-
-Замените `Текст ссылки` текстом, который хотите использовать для ссылки. Вместо `URL` вставьте адрес, на который должна вести ссылка. Например:
-
-```markdown
-[Посетите Яндекс](https://ya.ru/)
-```
+[Warm House Context Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/context/context.puml)
 
 # Задание 2. Проектирование микросервисной архитектуры
 
-В этом задании вам нужно предоставить только диаграммы в модели C4. Мы не просим вас отдельно описывать получившиеся микросервисы и то, как вы определили взаимодействия между компонентами To-Be системы. Если вы правильно подготовите диаграммы C4, они и так это покажут.
-
 **Диаграмма контейнеров (Containers)**
 
-Добавьте диаграмму.
+![Warm House System Container Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/containers/containers.png)
+
+[Warm House System Container Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/containers/containers.puml)
 
 **Диаграмма компонентов (Components)**
 
-Добавьте диаграмму для каждого из выделенных микросервисов.
+![Auth/Registration Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_AuthReg.png)
+
+[Auth/Registration Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_AuthReg.puml)
+
+![Device Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_Device.png)
+
+[Device Component Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/components/container_Device.puml)
 
 **Диаграмма кода (Code)**
 
-Добавьте одну диаграмму или несколько.
+![Device Control Code Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/code/device_control_component.png)
+
+[Device Control Code Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/code/device_control_component.puml)
+
+![Sensors Telemetry Code Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/code/sensors-telemetry-component.png)
+
+[Sensors Telemetry Code Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/code/sensors-telemetry-component.puml)
 
 # Задание 3. Разработка ER-диаграммы
 
-Добавьте сюда ER-диаграмму. Она должна отражать ключевые сущности системы, их атрибуты и тип связей между ними.
+![ER Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/er/er.png)
+
+[ER Diagram](https://github.com/kuznechek/architecture-pro-warmhouse/blob/warmhouse/schemas/er/er.puml)
 
 # Задание 4. Создание и документирование API
 
 ### 1. Тип API
 
-Укажите, какой тип API вы будете использовать для взаимодействия микросервисов. Объясните своё решение.
+- В данном случае взаимодействие между фронтеном и бекендом будет реализовано через REST API, так как у приложения простые коммуникационные потребности.
 
 ### 2. Документация API
 
-Здесь приложите ссылки на документацию API для микросервисов, которые вы спроектировали в первой части проектной работы. Для документирования используйте Swagger/OpenAPI или AsyncAPI.
+[Device Control swagger.json](https://github.com/kuznechek/architecture-pro-warmhouse/tree/warmhouse/apps/microservice-architecture/device-control-service/swagger.json)
+
+[Telemetry swagger.json](https://github.com/kuznechek/architecture-pro-warmhouse/tree/warmhouse/apps/microservice-architecture/sensors-telemetry-service/swagger.json)
 
 # Задание 5. Работа с docker и docker-compose
-
-Перейдите в apps.
-
-Там находится приложение-монолит для работы с датчиками температуры. В README.md описано как запустить решение.
-
-Вам нужно:
-
-1) сделать простое приложение temperature-api на любом удобном для вас языке программирования, которое при запросе /temperature?location= будет отдавать рандомное значение температуры.
-
-Locations - название комнаты, sensorId - идентификатор названия комнаты
-
-```
-	// If no location is provided, use a default based on sensor ID
-	if location == "" {
-		switch sensorID {
-		case "1":
-			location = "Living Room"
-		case "2":
-			location = "Bedroom"
-		case "3":
-			location = "Kitchen"
-		default:
-			location = "Unknown"
-		}
-	}
-
-	// If no sensor ID is provided, generate one based on location
-	if sensorID == "" {
-		switch location {
-		case "Living Room":
-			sensorID = "1"
-		case "Bedroom":
-			sensorID = "2"
-		case "Kitchen":
-			sensorID = "3"
-		default:
-			sensorID = "0"
-		}
-	}
-```
-
-2) Приложение следует упаковать в Docker и добавить в docker-compose. Порт по умолчанию должен быть 8081
-
-3) Кроме того для smart_home приложения требуется база данных - добавьте в docker-compose файл настройки для запуска postgres с указанием скрипта инициализации ./smart_home/init.sql
-
-Для проверки можно использовать Postman коллекцию smarthome-api.postman_collection.json и вызвать:
 
 - Create Sensor
 - Get All Sensors
 
-Должно при каждом вызове отображаться разное значение температуры
-
-Ревьюер будет проверять точно так же.
-
+При каждом вызове отображается разное значение температуры.
 
 # **Задание 6. Разработка MVP**
 
 Необходимо создать новые микросервисы и обеспечить их интеграции с существующим монолитом для плавного перехода к микросервисной архитектуре. 
 
-### **Что нужно сделать**
+В рамках задания были созданы два микросервиса - для управления устройствами (**device-control-service**, Python) и для отслеживания приходящих запросов с устройств, оповещающих об изменении состояния устройства (**sensors-telemetry-service**, Go). Сервисы работают параллельно и не зависят друг от друга.
 
-1. Создайте новые микросервисы для управления телеметрией и устройствами (с простейшей логикой), которые будут интегрированы с существующим монолитным приложением. Каждый микросервис на своем ООП языке.
-2. Обеспечьте взаимодействие между микросервисами и монолитом (при желании с помощью брокера сообщений), чтобы постепенно перенести функциональность из монолита в микросервисы. 
+Для тестирования их работы можно воспользоваться Postman коллекциями:
 
-В результате у вас должны быть созданы Dockerfiles и docker-compose для запуска микросервисов. 
+[DeviceControl.postman_collection.json](https://github.com/kuznechek/architecture-pro-warmhouse/tree/warmhouse/apps/microservice-architecture/postman-collections/DeviceControl.postman_collection.json)
+
+[Telemetry.postman_collection.json](https://github.com/kuznechek/architecture-pro-warmhouse/tree/warmhouse/apps/microservice-architecture/postman-collections/Telemetry.postman_collection.json)
+
+Каждый сервис может быть масштабирован и доработан до более приближённой модели к реальным условиям (например, в данной версии нет эмуляторов устройств, и данные существуют только в формате таблицы в базе данных).

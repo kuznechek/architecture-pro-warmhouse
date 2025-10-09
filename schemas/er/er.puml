@@ -1,0 +1,55 @@
+@startuml
+
+entity User {
+    id : int
+    login : string
+    name : string
+    email : string
+    password : string
+    isAdmin : bool
+
+    void Register()
+    void Login()
+}
+
+entity Device {
+    id : int
+    user_id : int
+    name : string
+    isEnable : bool
+    value : string
+    version : string
+    lastUpdate : string
+}
+
+entity DeviceControlModule {
+    id : int
+    name : string
+
+    void CreateDevice()
+    void DeleteDevice()
+    void UpdateDevice()
+}
+
+entity TelemetryModule {
+    id : int
+    value : string
+    status : string
+
+    void DataUpdated()
+}
+
+entity TelemetryData {
+    id : int
+    data : string
+    device_id : int
+    date_created : timestamp
+}
+
+User ||--|| DeviceControlModule
+User ||--|| TelemetryModule 
+Device }o--|| DeviceControlModule 
+Device }o--|| TelemetryData 
+TelemetryData }o--||  TelemetryModule 
+
+@enduml

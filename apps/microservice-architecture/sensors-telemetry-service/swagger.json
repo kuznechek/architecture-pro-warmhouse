@@ -1,0 +1,76 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Sensors Telemetry Service API",
+    "description": "API for managing sensor telemetry data in the Warm House System. This service handles sensor value updates and telemetry operations using Go and Gin framework.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Warm House System",
+      "email": "support@warmhouse.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8082",
+      "description": "Local development server"
+    },
+    {
+      "url": "http://sensors-telemetry-service:8082",
+      "description": "Docker container server"
+    }
+  ],
+  "paths": {
+    "/api/v2/telemetry": {
+      "get": {
+        "summary": "Service Health Check",
+        "description": "Returns the current status of the sensors telemetry service. This endpoint is used for health monitoring and service discovery.",
+        "operationId": "health_check"
+      }
+    },
+    "/api/v2/sensors/{id}/value": {
+      "patch": {
+        "summary": "Update Sensor Value",
+        "description": "Update the current value and status of a specific sensor. This endpoint is typically used by telemetry systems to report real-time sensor readings.",
+        "operationId": "update_sensor_value",
+        "tags": ["Sensors"]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SensorValueUpdate": {
+        "type": "object",
+        "description": "Request payload for updating sensor telemetry data",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "double",
+            "description": "New sensor reading value",
+            "example": 23.5
+          },
+          "status": {
+            "type": "string",
+            "description": "Updated status of the sensor",
+            "enum": ["active", "inactive", "error"],
+            "example": "active"
+          }
+        },
+        "required": ["value", "status"]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Health",
+      "description": "Service health and monitoring endpoints"
+    },
+    {
+      "name": "Sensors",
+      "description": "Sensor telemetry and value update operations"
+    }
+  ],
+  "externalDocs": {
+    "description": "Warm House System Documentation",
+    "url": "https://github.com/warmhouse/architecture-pro-warmhouse"
+  }
+}
